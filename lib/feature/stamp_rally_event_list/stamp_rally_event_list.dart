@@ -26,14 +26,14 @@ class StampRallyEventListPage extends StatelessWidget {
         title: const Text('スタンプラリーイベント一覧'),
         centerTitle: true,
       ),
-      body: ListView.separated(
+      body: ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: events.length,
-        separatorBuilder: (_, __) => const SizedBox(height: 16),
         itemBuilder: (context, index) {
           final event = events[index];
           return Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             elevation: 4,
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -53,29 +53,46 @@ class StampRallyEventListPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          event['name'] as String,
-                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        Flexible(
+                          child: Text(
+                            event['name'] as String,
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                            softWrap: true,
+                            overflow: TextOverflow.visible,
+                          ),
                         ),
                         const SizedBox(height: 8),
                         Row(
                           children: [
-                            const Icon(Icons.calendar_today, size: 16, color: Colors.blueGrey),
+                            const Icon(Icons.calendar_today,
+                                size: 16, color: Colors.blueGrey),
                             const SizedBox(width: 4),
-                            Text(
-                              event['period'] as String,
-                              style: const TextStyle(fontSize: 14, color: Colors.blueGrey),
+                            Flexible(
+                              child: Text(
+                                event['period'] as String,
+                                style: const TextStyle(
+                                    fontSize: 10, color: Colors.blueGrey),
+                                softWrap: true,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 8),
                         Row(
                           children: [
-                            const Icon(Icons.place, size: 16, color: Colors.redAccent),
+                            const Icon(Icons.place,
+                                size: 16, color: Colors.redAccent),
                             const SizedBox(width: 4),
-                            Text(
-                              event['place'] as String,
-                              style: const TextStyle(fontSize: 14, color: Colors.black87),
+                            Flexible(
+                              child: Text(
+                                event['place'] as String,
+                                style: const TextStyle(
+                                    fontSize: 14, color: Colors.black87),
+                                softWrap: true,
+                                overflow: TextOverflow.visible,
+                              ),
                             ),
                           ],
                         ),
@@ -91,5 +108,3 @@ class StampRallyEventListPage extends StatelessWidget {
     );
   }
 }
-
-

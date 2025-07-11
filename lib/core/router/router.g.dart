@@ -20,9 +20,16 @@ RouteBase get $startUpPageRoute => GoRouteData.$route(
           factory: $MainScreenRouteExtension._fromState,
           routes: [
             GoRouteData.$route(
-              path: 'main/stamp_detail',
+              path: 'stamp_detail/:placeId',
               name: 'stamp_detail',
               factory: $StampDetailRouteExtension._fromState,
+              routes: [
+                GoRouteData.$route(
+                  path: 'qr_code_scanner',
+                  name: 'qr_code_scanner',
+                  factory: $QrCodeScannerScreenRouteExtension._fromState,
+                ),
+              ],
             ),
           ],
         ),
@@ -72,14 +79,31 @@ extension $MainScreenRouteExtension on MainScreenRoute {
 
 extension $StampDetailRouteExtension on StampDetailRoute {
   static StampDetailRoute _fromState(GoRouterState state) => StampDetailRoute(
-        state.uri.queryParameters['place-id']!,
+        state.pathParameters['placeId']!,
       );
 
   String get location => GoRouteData.$location(
-        '/main/main/stamp_detail',
-        queryParams: {
-          'place-id': placeId,
-        },
+        '/main/stamp_detail/${Uri.encodeComponent(placeId)}',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $QrCodeScannerScreenRouteExtension on QrCodeScannerScreenRoute {
+  static QrCodeScannerScreenRoute _fromState(GoRouterState state) =>
+      QrCodeScannerScreenRoute(
+        placeId: state.pathParameters['placeId']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/main/stamp_detail/${Uri.encodeComponent(placeId)}/qr_code_scanner',
       );
 
   void go(BuildContext context) => context.go(location);

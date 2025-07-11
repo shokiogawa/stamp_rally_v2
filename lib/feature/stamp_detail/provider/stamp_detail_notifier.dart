@@ -71,8 +71,31 @@ class StampDetailNotifier extends _$StampDetailNotifier {
 
     final updateStamp = stampDto.registerStamp();
     await ref.read(stampRepositoryProvider).register(updateStamp);
-    logger.i("スタンプ取得: $updateStamp");
     state = AsyncValue.data(await fetchDetail(stampDto.historicSpotId));
+
+    // スタンプ取得後に再検証
+    revlidate();
+  }
+
+  // スタンプ登録(QRコード用)
+  Future<void> registerStampForQR(String historicSpotId) async {
+    final targetStamp = await future;
+    if (targetStamp == null) {
+      throw Exception("スタンプデータが存在しません");
+    }
+
+    if (targetStamp.historicSpotId != historicSpotId) {
+      logger.e("");
+      throw Exception('このスポットのQRコードではありません');
+    }
+
+    // バリデーション実行
+    final place = getPlaceModel(historicSpotId);
+    await canGetStampWorshipCardValidation.execute(place);
+
+    final updateStamp = targetStamp.registerStamp();
+    await ref.read(stampRepositoryProvider).register(updateStamp);
+    state = AsyncValue.data(await fetchDetail(targetStamp.historicSpotId));
 
     // スタンプ取得後に再検証
     revlidate();

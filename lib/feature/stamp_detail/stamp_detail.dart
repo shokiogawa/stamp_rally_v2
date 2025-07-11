@@ -3,12 +3,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:stamp_rally_v2_fvm/core/component/loading_snack_bar.dart';
 import 'package:stamp_rally_v2_fvm/core/data/place/place_csv_model.dart';
 import 'package:stamp_rally_v2_fvm/core/data/place/place_model.dart';
-import 'package:stamp_rally_v2_fvm/core/provider/fetch_place_provider.dart';
 import 'package:stamp_rally_v2_fvm/core/router/router.dart';
 import 'package:stamp_rally_v2_fvm/core/utility/format_japanese_date.dart';
 import 'package:stamp_rally_v2_fvm/feature/stamp_detail/provider/stamp_detail_notifier.dart';
 import 'package:stamp_rally_v2_fvm/feature/stamp_detail/provider/worship_card_file_notifier.dart';
+import 'package:stamp_rally_v2_fvm/feature/stamp_detail/qr_code_scanner.dart';
 import 'package:stamp_rally_v2_fvm/feature/stamp_detail/widget/worship_card_dialog.dart';
+import 'package:stamp_rally_v2_fvm/core/service/open_another_url_service.dart';
 
 class StampDetailScreen extends HookConsumerWidget {
   const StampDetailScreen({super.key, required this.placeId});
@@ -77,6 +78,20 @@ class StampDetailScreen extends HookConsumerWidget {
                         style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
+                      const SizedBox(width: 3),
+                      GestureDetector(
+                        child: const Icon(
+                          Icons.pin_drop,
+                          size: 20,
+                          color: Colors.brown,
+                        ),
+                        onTap: () async {
+                          await OpenAnotherUrlService.openGoogleMap(
+                            place.latitude.toString(),
+                            place.longitude.toString(),
+                          );
+                        },
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -89,18 +104,24 @@ class StampDetailScreen extends HookConsumerWidget {
                   // スタンプ取得ボタン
                   ElevatedButton.icon(
                     onPressed: () async {
-                      LoadingAction.showSnackBar(
-                          future: () {
-                            // スタンプ登録処理
-                            return notifier.registerStamp();
-                          },
-                          context: context,
-                          successMessage: "スタンプを取得しました。",
-                          errorMessage: "",
-                          showSuccessSnackBar: true);
+                      // QRコードが必要な場合はQRコード画面に遷移する。
+                      if (place.typeRegisterStamp == TypeRegisterStamp.qr) {
+                        QrCodeScannerScreen.push(context, placeId);
+                      } else {
+                        // それ以外は、QRコード以外のチェック
+                        LoadingAction.showSnackBar(
+                            future: () {
+                              // スタンプ登録処理
+                              return notifier.registerStamp();
+                            },
+                            context: context,
+                            successMessage: "スタンプを取得しました。",
+                            errorMessage: "",
+                            showSuccessSnackBar: true);
+                      }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: const Color(0xFF007B43),
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       textStyle: const TextStyle(fontSize: 16),
                     ),
@@ -129,11 +150,6 @@ class StampDetailScreen extends HookConsumerWidget {
                               showWorshipCardDialog(context, place);
                             }
                           });
-
-                      // if (context.mounted) {
-                      //   // 参拝カードダイアログを表示
-                      //   showWorshipCardDialog(context, place);
-                      // }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF6F4E37),
@@ -152,6 +168,7 @@ class StampDetailScreen extends HookConsumerWidget {
                   StampDetailDescription(place: place),
                   const SizedBox(height: 16),
                   ExpansionTile(
+                    initiallyExpanded: true,
                     title: const Text(
                       'スタンプ履歴を表示',
                       style:
@@ -189,6 +206,7 @@ class StampDetailScreen extends HookConsumerWidget {
                   ),
                   // const SizedBox(height: 24),
                   ExpansionTile(
+                    initiallyExpanded: true,
                     title: const Text(
                       '参拝カードを表示',
                       style:

@@ -7,7 +7,7 @@ part of 'stamp_detail_notifier.dart';
 // **************************************************************************
 
 String _$stampDetailNotifierHash() =>
-    r'8e26ba5935c7756a586ce2c56138bfb73c769c81';
+    r'c95af946344eee0be7605961d6f3f65ab4c3cc29';
 
 /// Copied from Dart SDK
 class _SystemHash {

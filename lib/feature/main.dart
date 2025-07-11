@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:stamp_rally_v2_fvm/feature/google_map/google_map.dart';
 import 'package:stamp_rally_v2_fvm/feature/home/home.dart';
 import 'package:stamp_rally_v2_fvm/feature/stamp_list/stamp_list.dart';
+import 'package:stamp_rally_v2_fvm/feature/stamp_rally_event_list/stamp_rally_event_list.dart';
 
 import '../core/router/router.dart';
 
@@ -24,9 +25,10 @@ class MainScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentIndex = useState(0);
     final pageList = [
+      // const StampRallyEventListPage(),
       const HomePage(),
       const StampListPage(),
-      const GoogleMapPage()
+      const GoogleMapPage(),
     ];
     return SafeArea(
       child: Scaffold(
@@ -35,6 +37,10 @@ class MainScreen extends HookConsumerWidget {
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: currentIndex.value,
           items: const [
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.list_alt_outlined),
+            //   label: 'スタンプラリーイベント一覧',
+            // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.summarize),
               label: '概要',

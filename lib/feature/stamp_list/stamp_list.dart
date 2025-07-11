@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:stamp_rally_v2_fvm/feature/stamp_detail/stamp_detail.dart';
 import 'package:stamp_rally_v2_fvm/feature/stamp_list/provider/fetch_place_and_stamped_provider.dart';
+import 'package:stamp_rally_v2_fvm/feature/stamp_list/widget/complete_card_dialog.dart';
 
 class StampListPage extends HookConsumerWidget {
   const StampListPage({super.key});
@@ -14,6 +15,7 @@ class StampListPage extends HookConsumerWidget {
       data: (places) {
         final acquiredCount = places.where((place) => place.isStamped).length;
         final totalCount = places.length;
+        final isComplete = acquiredCount == totalCount;
 
         return Padding(
           padding: const EdgeInsets.all(16.0),
@@ -34,6 +36,7 @@ class StampListPage extends HookConsumerWidget {
               ),
               const SizedBox(height: 24),
               Expanded(
+                flex: 9,
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -115,6 +118,28 @@ class StampListPage extends HookConsumerWidget {
                   },
                 ),
               ),
+              Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10, bottom: 5, right: 10, left: 10),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF007B43),
+                          ),
+                          onPressed: isComplete
+                              ? () {
+                                  showCompleteCardDialog(context);
+                                }
+                              : null,
+                          child: const Text(
+                            "スタンプラリー達成！",
+                            style: TextStyle(color: Colors.white),
+                          )),
+                    ),
+                  ))
             ],
           ),
         );

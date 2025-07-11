@@ -12,6 +12,14 @@ import 'package:flutter/widgets.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/complete_card_sign.png
+  AssetGenImage get completeCardSign =>
+      const AssetGenImage('assets/images/complete_card_sign.png');
+
+  /// File path: assets/images/conguraturation.png
+  AssetGenImage get conguraturation =>
+      const AssetGenImage('assets/images/conguraturation.png');
+
   /// File path: assets/images/oshiyama.jpg
   AssetGenImage get oshiyama =>
       const AssetGenImage('assets/images/oshiyama.jpg');
@@ -20,7 +28,8 @@ class $AssetsImagesGen {
   AssetGenImage get stamp => const AssetGenImage('assets/images/stamp.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [oshiyama, stamp];
+  List<AssetGenImage> get values =>
+      [completeCardSign, conguraturation, oshiyama, stamp];
 }
 
 class Assets {

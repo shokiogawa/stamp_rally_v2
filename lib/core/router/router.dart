@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:stamp_rally_v2_fvm/feature/login/pages/login_signin_page.dart';
 import 'package:stamp_rally_v2_fvm/feature/main.dart';
+import 'package:stamp_rally_v2_fvm/feature/stamp_detail/qr_code_scanner.dart';
 import 'package:stamp_rally_v2_fvm/feature/stamp_detail/stamp_detail.dart';
 import 'package:stamp_rally_v2_fvm/feature/startup/pages/start_up_page.dart';
 
@@ -23,10 +24,17 @@ GoRouter goRouter(Ref ref) {
   routes: [
     // ログイン & サインイン
     TypedGoRoute<MainScreenRoute>(path: 'main', name: 'main', routes: [
+      // 詳細画面
       TypedGoRoute<StampDetailRoute>(
-        path: 'main/stamp_detail',
-        name: 'stamp_detail',
-      )
+          path: 'stamp_detail/:placeId',
+          name: 'stamp_detail',
+          routes: [
+            // QRコード画面
+            TypedGoRoute<QrCodeScannerScreenRoute>(
+              path: 'qr_code_scanner',
+              name: 'qr_code_scanner',
+            )
+          ]),
     ]),
 
     // ログイン & サインイン
@@ -62,6 +70,15 @@ class StampDetailRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       StampDetailScreen(placeId: placeId);
+}
+
+class QrCodeScannerScreenRoute extends GoRouteData {
+  const QrCodeScannerScreenRoute({required this.placeId});
+  final String placeId;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      QrCodeScannerScreen(placeId: placeId);
 }
 
 // ログイン & サインイン

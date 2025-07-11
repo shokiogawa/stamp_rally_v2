@@ -34,7 +34,7 @@ class CanGetStampWorshipCardValidation {
           latitude: place.latitude,
           longitude: place.longitude);
       if (!isValid) {
-        throw Exception("現在地がスタンプ取得可能な範囲内にありません");
+        throw Exception("現在地が取得可能な範囲内にありません");
       }
     }
 
@@ -45,13 +45,13 @@ class CanGetStampWorshipCardValidation {
           latitude: place.latitude,
           longitude: place.longitude);
       if (!isValid) {
-        throw Exception("現在地がスタンプ取得可能な範囲内にありません");
+        throw Exception("現在地が取得可能な範囲内にありません");
       }
 
       final isValidDate = await dateStampRegisterValidationService.execute(
           place, DateTime.now());
       if (!isValidDate) {
-        throw Exception("スタンプ取得可能な期間外です");
+        throw Exception("取得可能期間外です");
       }
     }
 

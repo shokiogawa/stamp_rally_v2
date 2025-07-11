@@ -48,11 +48,9 @@ class DownloadService {
       if (await file.exists()) {
         return file;
       } else {
-        print('File not found: $filePath');
         return null;
       }
     } catch (e) {
-      print('Error retrieving image: $e');
       return null;
     }
   }
@@ -72,7 +70,6 @@ class DownloadService {
 
       // List all files in the directory
       final files = historicSpotDirectory.listSync().whereType<File>().toList();
-      print('Files found: ${files.length}');
       return files;
     } catch (e) {
       logger.e('Error retrieving files: $e');

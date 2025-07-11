@@ -4,10 +4,10 @@
     {
       "name": "スタンプラリー (debug mode)",
       "request": "launch",
-      "type": "dart"
-      // "args": [
-      //   "--dart-define-from-file=lib/core/configuration/develop/dart_defines_development.json"
-      // ]
+      "type": "dart",
+      "args": [
+        "--dart-define-from-file=lib/core/configuration/develop/dart_defines_development.json"
+      ]
     },
     {
       "name": "スタンプラリー (profile mode)",
@@ -19,11 +19,11 @@
       "name": "スタンプラリー (release mode)",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "release"
-      // "args": [
-      //   "--release",
-      //   "--dart-define-from-file=lib/app/configuration/production/dart_defines_production.json"
-      // ]
+      "flutterMode": "release",
+      "args": [
+        "--release",
+        "--dart-define-from-file=lib/core/configuration/production/dart_defines_production.json"
+      ]
     }
   ]
 }
