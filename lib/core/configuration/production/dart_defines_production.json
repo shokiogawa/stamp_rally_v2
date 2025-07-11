@@ -1,0 +1,9 @@
+{
+    "flavor": "production",
+    "appId": "jp.me.sho.work_bgm_with",
+    "appNameIos": "みんなと作業用BGM",
+    "appNameAndroid": "みんなと作業用BGM",
+    "supabaseUrl": "https://senmgccaddgpcsxjokld.supabase.co",
+    "anonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNlbm1nY2NhZGRncGNzeGpva2xkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDUxNTEwNTQsImV4cCI6MjA2MDcyNzA1NH0.vOH0sWQPcowPaRLyH090oz4ocV3KMFbwVwu7H1qZpNw",
+    "databasePass": "work_with_bgm_secret"
+}

@@ -1,0 +1,2 @@
+/Users/ogawashoki/repository/stamp_rally_v2_fvm/android/app/.cxx/RelWithDebInfo/3m2f311d/x86/CMakeFiles/edit_cache.dir
+/Users/ogawashoki/repository/stamp_rally_v2_fvm/android/app/.cxx/RelWithDebInfo/3m2f311d/x86/CMakeFiles/rebuild_cache.dir
