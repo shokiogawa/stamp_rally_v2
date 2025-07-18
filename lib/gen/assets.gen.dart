@@ -27,9 +27,12 @@ class $AssetsImagesGen {
   /// File path: assets/images/stamp.png
   AssetGenImage get stamp => const AssetGenImage('assets/images/stamp.png');
 
+  /// File path: assets/images/takeru.jpg
+  AssetGenImage get takeru => const AssetGenImage('assets/images/takeru.jpg');
+
   /// List of all assets
   List<AssetGenImage> get values =>
-      [completeCardSign, conguraturation, oshiyama, stamp];
+      [completeCardSign, conguraturation, oshiyama, stamp, takeru];
 }
 
 class Assets {

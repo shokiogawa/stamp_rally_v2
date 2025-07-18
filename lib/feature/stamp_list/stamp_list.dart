@@ -1,17 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:stamp_rally_v2_fvm/core/router/router.dart';
 import 'package:stamp_rally_v2_fvm/feature/stamp_detail/stamp_detail.dart';
 import 'package:stamp_rally_v2_fvm/feature/stamp_list/provider/fetch_place_and_stamped_provider.dart';
 import 'package:stamp_rally_v2_fvm/feature/stamp_list/widget/complete_card_dialog.dart';
 
 class StampListPage extends HookConsumerWidget {
-  const StampListPage({super.key});
+  const StampListPage({super.key, required this.url});
+
+  final String url;
+
+  // 詳細ページをスタック
+  static void push(BuildContext context, String url) {
+    StampListPageRoute(url).push(context);
+  }
+
+  // 全てをページを置き換え
+  static void go(BuildContext context, String url) {
+    StampListPageRoute(url).go(context);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final placeAsyncNotifier = ref.watch(fetchPlaceAndStampedProvider);
+    final placeAsyncNotifier = ref.watch(fetchPlaceAndStampedProvider(url));
 
-    return placeAsyncNotifier.when(
+    return Scaffold(
+        body: placeAsyncNotifier.when(
       data: (places) {
         final acquiredCount = places.where((place) => place.isStamped).length;
         final totalCount = places.length;
@@ -145,7 +159,7 @@ class StampListPage extends HookConsumerWidget {
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, stack) => Center(child: Text('エラーが発生しました: $error')),
-    );
+      error: (error, stack) => Center(child: Text('エラーが発生しました: $stack')),
+    ));
   }
 }

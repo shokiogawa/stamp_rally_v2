@@ -1,7 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:stamp_rally_v2_fvm/core/data/place/place_model.dart';
 import 'package:stamp_rally_v2_fvm/core/data/stamp/stamp_dto.dart';
-import 'package:stamp_rally_v2_fvm/core/provider/fetch_place_provider.dart';
+import 'package:stamp_rally_v2_fvm/core/provider/fetch_place_by_place_provider.dart';
+import 'package:stamp_rally_v2_fvm/core/provider/selected_event_url_provider.dart';
 import 'package:stamp_rally_v2_fvm/core/utility/logger.dart';
 import 'package:stamp_rally_v2_fvm/core/data/stamp/stamp_repository.dart';
 import 'package:stamp_rally_v2_fvm/feature/stamp_detail/validation/can_get_stamp_worship_card.validation.dart';
@@ -19,7 +20,8 @@ class StampDetailNotifier extends _$StampDetailNotifier {
       ref.read(canGetStampWorshipCardValidationProvider);
 
   PlaceModel getPlaceModel(String id) {
-    final place = ref.watch(fetchPlacesProvider).valueOrNull;
+    final url = ref.watch(selectedEventUrlProvider);
+    final place = ref.watch(fetchPlaceByPlaceProvider(url)).valueOrNull;
     if (place == null) {
       logger.e("スタンプ一覧データが存在しません");
       throw Exception("スタンプ一覧データが存在しません");
@@ -106,5 +108,7 @@ class StampDetailNotifier extends _$StampDetailNotifier {
     for (var provider in revalidateProviders) {
       ref.invalidate(provider);
     }
+    // final url = ref.watch(selectedEventUrlProvider);
+    // ref.invalidate(fetchPlaceByPlaceProvider(url));
   }
 }

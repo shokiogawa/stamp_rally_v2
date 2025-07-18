@@ -18,6 +18,9 @@ Future<List<PlaceModel>> fetchPlaces(Ref ref) async {
 
   final jpHolidays = await ref.read(getHolidayJpServiceProvider).getHolidays();
 
+  // データが存在しない場合は、削除
+  json.removeWhere((element) => (element['historicSpotId'] as String).isEmpty);
+
   return json
       .map((o) => PlaceModel.fromAsset(
           data: PlaceCsvModel.fromJson(o), jpHoliday: jpHolidays))

@@ -241,23 +241,33 @@ class StampDetailDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (place.typeRegisterStamp == TypeRegisterStamp.gps ||
-            place.typeRegisterStamp == TypeRegisterStamp.gpsDate)
-          Text(place.descriptionGpsmeter,
-              style: const TextStyle(fontSize: 12, color: Colors.grey)),
-        if (place.typeRegisterStamp == TypeRegisterStamp.gpsDate &&
-            place.descriptionWeekDays.isNotEmpty)
-          Text(
-            place.descriptionWeekDays,
-            style: const TextStyle(fontSize: 12, color: Colors.grey),
+        const Text("取得条件"),
+        Padding(
+          padding: const EdgeInsets.only(top: 2, right: 5, left: 5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (place.typeRegisterStamp == TypeRegisterStamp.gps ||
+                  place.typeRegisterStamp == TypeRegisterStamp.gpsDate)
+                Text(place.descriptionGpsmeter,
+                    style: const TextStyle(fontSize: 12, color: Colors.grey)),
+              if (place.typeRegisterStamp == TypeRegisterStamp.gpsDate &&
+                  place.descriptionWeekDays.isNotEmpty)
+                Text(
+                  place.descriptionWeekDays,
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              if (place.typeRegisterStamp == TypeRegisterStamp.gpsDate &&
+                  place.descriptionHoliday.isNotEmpty)
+                Text(
+                  place.descriptionHoliday,
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+            ],
           ),
-        if (place.typeRegisterStamp == TypeRegisterStamp.gpsDate &&
-            place.descriptionHoliday.isNotEmpty)
-          Text(
-            place.descriptionHoliday,
-            style: const TextStyle(fontSize: 12, color: Colors.grey),
-          ),
+        )
       ],
     );
   }
