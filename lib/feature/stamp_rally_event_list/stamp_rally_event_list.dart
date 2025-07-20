@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:stamp_rally_v2_fvm/core/provider/selected_event_url_provider.dart';
@@ -91,28 +92,24 @@ class StampRallyEventListPage extends HookConsumerWidget {
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: event.image != null
-                                    ? Image.network(
-                                        event.image!,
+                                    ? CachedNetworkImage(
+                                        imageUrl: event.image!,
                                         width: 110,
                                         height: 110,
                                         fit: BoxFit.cover,
-                                        errorBuilder:
-                                            (context, error, stackTrace) {
-                                          return Container(
-                                            width: 110,
-                                            height: 110,
-                                            decoration: BoxDecoration(
-                                              color: Colors.grey[300],
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            child: const Icon(
-                                              Icons.image_not_supported,
-                                              color: Colors.grey,
-                                            ),
-                                          );
-                                        },
-                                      )
+                                        errorWidget: (context, url, error) =>
+                                            Container(
+                                                width: 110,
+                                                height: 110,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey[300],
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
+                                                child: const Icon(
+                                                  Icons.image_not_supported,
+                                                  color: Colors.grey,
+                                                )))
                                     : const SizedBox(
                                         width: 110,
                                         height: 110,
