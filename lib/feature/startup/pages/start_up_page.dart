@@ -14,7 +14,7 @@ class StartUpPage extends HookConsumerWidget {
     // final authUseCase = ref.watch(authUseCaseProvider.notifier);
     Future(() async {
       if (context.mounted) {
-        StampRallyEventListPage.go(context);
+        StampRallyEventListPage.pushReplacement(context);
       }
     });
 

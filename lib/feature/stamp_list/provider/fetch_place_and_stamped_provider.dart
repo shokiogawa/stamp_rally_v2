@@ -4,7 +4,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:stamp_rally_v2_fvm/core/data/place/place_model.dart';
 import 'package:stamp_rally_v2_fvm/core/data/stamp/stamp_repository.dart';
 import 'package:stamp_rally_v2_fvm/core/provider/fetch_place_by_place_provider.dart';
-import 'package:stamp_rally_v2_fvm/core/provider/fetch_place_provider.dart';
 
 part 'fetch_place_and_stamped_provider.g.dart';
 

@@ -1,7 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:stamp_rally_v2_fvm/core/data/complete_card/complete_card_model.dart';
-import 'package:stamp_rally_v2_fvm/core/service/csv.service.dart';
+import 'package:stamp_rally_v2_fvm/core/service/csv/csv.service.dart';
 
 part 'fetch_complete_card_service.g.dart';
 

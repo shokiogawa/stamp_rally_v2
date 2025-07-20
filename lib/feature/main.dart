@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:stamp_rally_v2_fvm/feature/google_map/google_map.dart';
 import 'package:stamp_rally_v2_fvm/feature/home/home.dart';
 import 'package:stamp_rally_v2_fvm/feature/stamp_list/stamp_list.dart';
 import 'package:stamp_rally_v2_fvm/feature/stamp_rally_event_list/stamp_rally_event_list.dart';
