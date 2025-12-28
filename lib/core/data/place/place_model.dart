@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:stamp_rally_v2_fvm/core/data/place/place_csv_model.dart';
+import 'package:stamp_rally_v2_fvm/core/utility/logger.dart';
 
 part 'place_model.freezed.dart';
 
@@ -84,11 +85,18 @@ class PlaceModel with _$PlaceModel {
   }
 
   // dateStartを取得する
-  static DateTime _getDateStart(PlaceCsvModel data, List<DateTime> jpHolidays) {
+  static DateTime? _getDateStart(
+      PlaceCsvModel data, List<DateTime> jpHolidays) {
+    // logger.i(data.typeRegisterStamp);
+    if (data.typeRegisterStamp == TypeRegisterStamp.gps ||
+        data.typeRegisterStamp == TypeRegisterStamp.qr ||
+        data.typeRegisterStamp == TypeRegisterStamp.sample) {
+      return null;
+    }
     try {
       if (data.dateStart.isNotEmpty) {
         return DateFormat("yyyy-MM-dd HH:mm:ss")
-            .parse(data.dateStart!)
+            .parse(data.dateStart ?? "2029-12-12")
             .toLocal();
       }
 
@@ -120,10 +128,18 @@ class PlaceModel with _$PlaceModel {
   }
 
   // dateEndを取得する
-  static DateTime _getDateEnd(PlaceCsvModel data, List<DateTime> jpHolidays) {
+  static DateTime? _getDateEnd(PlaceCsvModel data, List<DateTime> jpHolidays) {
+    // logger.i(data.typeRegisterStamp);
+    if (data.typeRegisterStamp == TypeRegisterStamp.gps ||
+        data.typeRegisterStamp == TypeRegisterStamp.qr ||
+        data.typeRegisterStamp == TypeRegisterStamp.sample) {
+      return null;
+    }
     try {
       if (data.dateEnd.isNotEmpty) {
-        return DateFormat("yyyy-MM-dd HH:mm:ss").parse(data.dateEnd!).toLocal();
+        return DateFormat("yyyy-MM-dd HH:mm:ss")
+            .parse(data.dateEnd ?? "2029-12-12")
+            .toLocal();
       }
       final baseDate = DateTime.now();
       if (_isWeekend(baseDate, jpHolidays)) {

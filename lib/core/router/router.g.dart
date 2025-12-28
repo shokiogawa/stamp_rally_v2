@@ -15,6 +15,17 @@ RouteBase get $startUpPageRoute => GoRouteData.$route(
       factory: $StartUpPageRouteExtension._fromState,
       routes: [
         GoRouteData.$route(
+          path: 'stamp_rally_event_list_page',
+          name: 'stamp_rally_event_list_page',
+          factory: $StampRallyEventListPageRouteExtension._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'stamp_rally_event_detail',
+              factory: $StampRallyEventDetailPageRouteExtension._fromState,
+            ),
+          ],
+        ),
+        GoRouteData.$route(
           path: 'main',
           name: 'main',
           factory: $MainScreenRouteExtension._fromState,
@@ -38,6 +49,16 @@ RouteBase get $startUpPageRoute => GoRouteData.$route(
           name: 'login_sign_in',
           factory: $LoginSignInPageRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'home',
+          name: 'home',
+          factory: $HomePageRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'stamp_list_page/:url',
+          name: 'stamp_list_page',
+          factory: $StampListPageRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -47,6 +68,49 @@ extension $StartUpPageRouteExtension on StartUpPageRoute {
 
   String get location => GoRouteData.$location(
         '/',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $StampRallyEventListPageRouteExtension
+    on StampRallyEventListPageRoute {
+  static StampRallyEventListPageRoute _fromState(GoRouterState state) =>
+      const StampRallyEventListPageRoute();
+
+  String get location => GoRouteData.$location(
+        '/stamp_rally_event_list_page',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $StampRallyEventDetailPageRouteExtension
+    on StampRallyEventDetailPageRoute {
+  static StampRallyEventDetailPageRoute _fromState(GoRouterState state) =>
+      StampRallyEventDetailPageRoute(
+        state.uri.queryParameters['url']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/stamp_rally_event_list_page/stamp_rally_event_detail',
+        queryParams: {
+          'url': url,
+        },
       );
 
   void go(BuildContext context) => context.go(location);
@@ -122,6 +186,43 @@ extension $LoginSignInPageRouteExtension on LoginSignInPageRoute {
 
   String get location => GoRouteData.$location(
         '/login_sign_in',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $HomePageRouteExtension on HomePageRoute {
+  static HomePageRoute _fromState(GoRouterState state) => const HomePageRoute();
+
+  String get location => GoRouteData.$location(
+        '/home',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $StampListPageRouteExtension on StampListPageRoute {
+  static StampListPageRoute _fromState(GoRouterState state) =>
+      StampListPageRoute(
+        state.pathParameters['url']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/stamp_list_page/${Uri.encodeComponent(url)}',
       );
 
   void go(BuildContext context) => context.go(location);

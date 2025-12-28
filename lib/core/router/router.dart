@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:stamp_rally_v2_fvm/feature/home/home.dart';
 import 'package:stamp_rally_v2_fvm/feature/login/pages/login_signin_page.dart';
 import 'package:stamp_rally_v2_fvm/feature/main.dart';
 import 'package:stamp_rally_v2_fvm/feature/stamp_detail/qr_code_scanner.dart';
 import 'package:stamp_rally_v2_fvm/feature/stamp_detail/stamp_detail.dart';
+import 'package:stamp_rally_v2_fvm/feature/stamp_list/stamp_list.dart';
+import 'package:stamp_rally_v2_fvm/feature/stamp_rally_event_detail/stamp_rally_event_detail.dart';
+import 'package:stamp_rally_v2_fvm/feature/stamp_rally_event_list/stamp_rally_event_list.dart';
 import 'package:stamp_rally_v2_fvm/feature/startup/pages/start_up_page.dart';
 
 part 'router.g.dart';
@@ -22,6 +26,14 @@ GoRouter goRouter(Ref ref) {
 @TypedGoRoute<StartUpPageRoute>(
   path: '/',
   routes: [
+    // スタンプイベント一覧ページ
+    TypedGoRoute<StampRallyEventListPageRoute>(
+        path: 'stamp_rally_event_list_page',
+        name: 'stamp_rally_event_list_page',
+        routes: [
+          TypedGoRoute<StampRallyEventDetailPageRoute>(
+              path: 'stamp_rally_event_detail'),
+        ]),
     // ログイン & サインイン
     TypedGoRoute<MainScreenRoute>(path: 'main', name: 'main', routes: [
       // 詳細画面
@@ -41,6 +53,18 @@ GoRouter goRouter(Ref ref) {
     TypedGoRoute<LoginSignInPageRoute>(
       path: 'login_sign_in',
       name: 'login_sign_in',
+    ),
+
+    // ホームページ
+    TypedGoRoute<HomePageRoute>(
+      path: 'home',
+      name: 'home',
+    ),
+
+    // スタンプ一覧
+    TypedGoRoute<StampListPageRoute>(
+      path: 'stamp_list_page/:url',
+      name: 'stamp_list_page',
     ),
   ],
 )
@@ -68,12 +92,14 @@ class StampDetailRoute extends GoRouteData {
   final String placeId;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      StampDetailScreen(placeId: placeId);
+  Widget build(BuildContext context, GoRouterState state) => StampDetailScreen(
+        placeId: placeId,
+      );
 }
 
 class QrCodeScannerScreenRoute extends GoRouteData {
   const QrCodeScannerScreenRoute({required this.placeId});
+
   final String placeId;
 
   @override
@@ -88,4 +114,43 @@ class LoginSignInPageRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const LoginSignInPage();
+}
+
+// ホーム
+class HomePageRoute extends GoRouteData {
+  const HomePageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => const HomePage();
+}
+
+// スタンプラリーイベント
+class StampRallyEventListPageRoute extends GoRouteData {
+  const StampRallyEventListPageRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const StampRallyEventListPage();
+}
+
+// スタンプ一覧ページ
+class StampListPageRoute extends GoRouteData {
+  StampListPageRoute(this.url);
+
+  final String url;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      StampListPage(url: url);
+}
+
+// スタンプイベント詳細ページ
+class StampRallyEventDetailPageRoute extends GoRouteData {
+  StampRallyEventDetailPageRoute(this.url);
+
+  final String url;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      StampRallyEventDetailPage(url: url);
 }

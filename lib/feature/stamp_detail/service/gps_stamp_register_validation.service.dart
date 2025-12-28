@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:stamp_rally_v2_fvm/core/service/location_service.dart';
+import 'package:stamp_rally_v2_fvm/core/service/location/location_service.dart';
 
 part 'gps_stamp_register_validation.service.g.dart';
 
